@@ -33,6 +33,7 @@ type Query {
       savedBooks(username: String): [User]
       books(username: String):[Book]
       book(_id: bookId!): Book
-     }
+     },
+     
 `
 module.exports = typeDefs;
