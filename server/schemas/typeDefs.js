@@ -4,18 +4,17 @@ const { gql } = require('apollo-server-express');
 // const { bookSchema } = require('../models/Book')
 // const { bookSchema } = {Book}
 
-// type Query {
-
-//       books(authors: String): [Book]
-      
-//     }
 const typeDefs = gql`
+
+
+
+
 type User {
       _id: ID
       username: String
       email: String
-      savedBooks: [User]
-      bookCount: [User]
+      savedBooks: [Book]
+      bookCount: [Book]
 }
 
 type Book {
@@ -25,7 +24,15 @@ type Book {
       bookId: String
       image: String
       link: String
-      title: Strring
-}
+      title: String
+},
+
+type Query {
+      users: [User]
+      user(username: String!): User
+      savedBooks(username: String): [User]
+      books(username: String):[Book]
+      book(_id: bookId!): Book
+     }
 `
 module.exports = typeDefs;
