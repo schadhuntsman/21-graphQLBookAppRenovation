@@ -25,7 +25,7 @@ const resolvers = {
       },
       {
             //get a single user by username
-            user(username: "<username-goes-here") {
+            (username: "<username-goes-here") {
                   username
                   email
                   savedBooks
@@ -55,7 +55,14 @@ const resolvers = {
                   }
             }
 
+         
+
       }
+      book: async (parent, {_id}) => {
+            return Book.findOne({_id});
+      }
+
+      //get all users
 }
 
 module.exports = resolvers;
