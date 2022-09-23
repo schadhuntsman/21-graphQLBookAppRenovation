@@ -18,18 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/react-hooks": "^4.0.0",
-    "apollo": "^2.34.0",
-    "apollo-server-express": "^2.19.2",
-    "bcrypt": "^5.0.1",
-    "express": "^4.18.1",
-    "graphql": "^14.7.0",
-    "if-env": "^1.0.4",
-    "jsonwebtoken": "^8.5.1",
-    "jwt-decode": "^3.1.2",
-    "mongoose": "^6.6.1",
-    "nodemon": "^2.0.20",
-    "server": "^1.0.37"
+    "nodemon": "^2.0.20"
   },
   "devDependencies": {
     "concurrently": "^5.3.0"

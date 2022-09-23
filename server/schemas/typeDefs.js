@@ -34,6 +34,11 @@ type Query {
       books(username: String):[Book]
       book(_id: bookId!): Book
      },
+
+     type Mutation {
+      login(email: String!, password: Sring!): User
+      addUser(username: String!, email: String!, password: String!): User
+     }
      
 `
 module.exports = typeDefs;
