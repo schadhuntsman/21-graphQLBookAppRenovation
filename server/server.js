@@ -8,7 +8,8 @@ const routes = require('./routes');
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: ({req}) => req.headers
 });
 
 const app = express();

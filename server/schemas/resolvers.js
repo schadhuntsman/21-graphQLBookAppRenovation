@@ -3,101 +3,117 @@ const { AuthenticationError} = require("apollo-server-express");
 const { Book, User } = require('../models');
 const { gql } = require('apollo-server-express');
 const { getSingleUser } = require('../controllers/user-controller');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
       Query: {
-            books: async () => {
-                  return Book.find().sort({ createdAt: -1 });
+            me: async (parent, args) => {
+               const userData = await User.findOne({})
+                  .select('-__v -password')
+                  .populate('books');
+                  
+                  return userData ;
             },
-            mutation login($email: String!, $password: String!) {
-                  login(email: $email, password: $password) {
-                    _id
-                    username
-                    email
+            Mutation: {
+            login: async (parent, { email, password }) => {
+                  const user = await User.FindOne ({email});
+
+                  if (!user) {
+                        throw new AuthenticationError('Incorrect credentials');
                   }
-                }
-                  },
-                        return user;
+                  const correctPw = await user.isCorrectPassword(password);
+                  
+                  if (!correctPw) {
+                        throw new AuthenticationError("Incorrect credentials");
+                  }
+                  const token = signToken(user);
+                  return { token, user };
+                  
+            }
+            
+            }
+       
 
-                  },
-                  login: async (parent, { email, password }) => {
-                        const user = await User.FindOne ({email});
 
-                        if (!user) {
-                              throw new AuthenticationError('Incorrect credentials');
-                        }
-                        const correctPw = await user.isCorrectPassword(password);
+//             mutation login($email: String!, $password: String!) {
+//                   login(email: $email, password: $password) {
+//                     _id
+//                     username
+//                     email
+
+//                   return userData;
+//                   }
+//                   throw new AuthenticationError('Not logged in');
+//                 }
+//              },
                         
-                        if (!correctPw) {
-                              throw new AuthenticationError("Incorrect credentials");
-                        }
-                        return user;
 
-                  }
-            },
-      
+//                   },
+                  
+//       }
+// }
 
       // books: async (parent, {_id }) => {
       //       return Book.findOne({_id });
       // },
       //get all users 
-      users: async () => {
-            return User.find()
-            .select('-__v -password')
-            .populate('books');
-      },
+      // users: async () => {
+      //       return User.find()
+      //       .select('-__v -password')
+      //       .populate('books');
+      // },
       //get all users by id
-      user: async (parent, { username }) => {
-            return User.findOne({ username })
-            .select('-__v -password')
-            .populate('books');
-      },
+      // user: async (parent, { username }) => {
+      //       return User.findOne({ username })
+      //       .select('-__v -password')
+      //       .populate('books');
+      // },
       
-            //get a single user by username
-            getSingleUser({ user = null, params }, res) {
-                  const userFound = await User.findOne({ 
-                        $or: [{ _id: user ? user._id : prams.id }, { username: params.username}],
-                  });
-            }
+      //       //get a single user by username
+      //       getSingleUser({ user = null, params }, res) {
+      //             const userFound = await User.findOne({ 
+      //                   $or: [{ _id: user ? user._id : prams.id }, { username: params.username}],
+      //             });
+      //       }
 
-            (username: "<username-goes-here>") {
-                  username
-                  email
-                  savedBooks
-                  books {
-                     bookText
-                  }
-            }
-      }
+            // (username: "<username-goes-here>") {
+            //       username
+            //       email
+            //       savedBooks
+            //       books {
+            //          bookText
+            //       }
+            // }
+      
             //get all books
-            books {
-                  _id
-                  username
-                  bookText
-                  genres {
-                        _id
-                        username
-                        genreChoices
-                  },
+            // books {
+            //       _id
+            //       username
+            //       bookText
+            //       genres {
+            //             _id
+            //             username
+            //             genreChoices
+            //       },
             
-            //get a single book
-            book(_id: "<book-id-here">) {
-                  _id
-                  username
-                  bookText
-                  genres {
-                        username
-                        genreChoices
-                  }
+            // //get a single book
+            // book(_id: "<book-id-here">) {
+            //       _id
+            //       username
+            //       bookText
+            //       genres {
+            //             username
+            //             genreChoices
+            //       }
             }
 
          
 
-      }
+      
 
 
       //get all users
-}
+
 }
 
 module.exports = resolvers;
