@@ -45,7 +45,7 @@ type Query {
       login(email: String!, password: Sring!): Auth
       addUser(username: String!, email: String!, password: String!): Auth
       addBook(searchText: String!): Book
-      # removeBook(bookId: String!): Book
+      removeBook(bookId: String!): Book
      }
      
 `
