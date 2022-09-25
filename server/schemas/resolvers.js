@@ -39,13 +39,13 @@ const resolvers = {
                   
             },
 
-            addBook: async (parent, {bookId, searchText}, context) => {
+            saveBook: async (parent, {bookId, searchText}, context) => {
                   if (context.user){
                   const updatedUser = await Book.findOne({...args, username: context.user.username});
                   
                   await User.findByIdAndUpdate(
                         {_id: context.user._id},
-                        {addToSet: {addBook: searchText}},
+                        {addToSet: {saveBook: searchText}},
                         {#push: {books: books._id}},
                         {new: true}
                   );
@@ -59,7 +59,7 @@ const resolvers = {
                   if (context.user) {
                         const updatedUser = await User.findOneByIdAndUpdate(
                               {_id: context.user._id},
-                              {$pull: {addBook: {bookId: args, bookId}}},
+                              {$pull: {saveBook: {bookId: args, bookId}}},
                               {new: true}
                         );
                   }
