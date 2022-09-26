@@ -2,14 +2,12 @@
 const { AuthenticationError} = require("apollo-server-express");
 const { Book, User } = require('../models');
 const { gql } = require('apollo-server-express');
-const { getSingleUser } = require('../controllers/user-controller');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
       Query: {
             me: async (parent, args, context) => {
                   if (context.user){
-                  const book = await Book.findOne({...args, username: context.user.username});
                
                   const userData = await User.findOne({ _id: context.user._id})
                   .select('-__v -password')
@@ -17,8 +15,8 @@ const resolvers = {
                   
                   return userData ;
             }
-            throw new AuthenticationError('Not logged in');
-      }
+            throw new AuthenticationError('Not logged in!');
+         }
       },
 
             Mutation: {
@@ -41,10 +39,8 @@ const resolvers = {
 
             saveBook: async (parent, {bookId, searchText}, context) => {
                   if (context.user){
-                  const updatedUser = await Book.findOne({...args, username: context.user.username});
-                  
-                  await User.findByIdAndUpdate(
-                        {_id: context.user._id},
+                  const updatedUser = await User.findOneByIdAndUpdate(
+                        {_id: context.user._id}, 
                         {addToSet: {saveBook: searchText}},
                         {#push: {books: books._id}},
                         {new: true}
@@ -59,7 +55,7 @@ const resolvers = {
                   if (context.user) {
                         const updatedUser = await User.findOneByIdAndUpdate(
                               {_id: context.user._id},
-                              {$pull: {saveBook: {bookId: args, bookId}}},
+                              {$pull: {saveBook: {bookId: args.bookId}}},
                               {new: true}
                         );
                   }
