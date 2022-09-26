@@ -37,12 +37,11 @@ const resolvers = {
                   
             },
 
-            saveBook: async (parent, {bookId, searchText}, context) => {
+            saved: async (parent, {bookId, searchText}, context) => {
                   if (context.user){
                   const updatedUser = await User.findOneByIdAndUpdate(
                         {_id: context.user._id}, 
-                        {addToSet: {saveBook: searchText}},
-                        {#push: {books: books._id}},
+                        {$addToSet: {saved: searchText}},
                         {new: true}
                   );
                   
@@ -55,96 +54,16 @@ const resolvers = {
                   if (context.user) {
                         const updatedUser = await User.findOneByIdAndUpdate(
                               {_id: context.user._id},
-                              {$pull: {saveBook: {bookId: args.bookId}}},
+                              {$pull: {saved: {bookId: args.bookId}}},
                               {new: true}
                         );
+                        return updatedUser;
                   }
+                  throw new AuthenticationError('You need to be logged in');
             }
       }
-            
-            
-       
+};
 
 
-//             mutation login($email: String!, $password: String!) {
-//                   login(email: $email, password: $password) {
-//                     _id
-//                     username
-//                     email
-
-//                   return userData;
-//                   }
-//                   throw new AuthenticationError('Not logged in');
-//                 }
-//              },
-                        
-
-//                   },
-                  
-//       }
-// }
-
-      // books: async (parent, {_id }) => {
-      //       return Book.findOne({_id });
-      // },
-      //get all users 
-      // users: async () => {
-      //       return User.find()
-      //       .select('-__v -password')
-      //       .populate('books');
-      // },
-      //get all users by id
-      // user: async (parent, { username }) => {
-      //       return User.findOne({ username })
-      //       .select('-__v -password')
-      //       .populate('books');
-      // },
-      
-      //       //get a single user by username
-      //       getSingleUser({ user = null, params }, res) {
-      //             const userFound = await User.findOne({ 
-      //                   $or: [{ _id: user ? user._id : prams.id }, { username: params.username}],
-      //             });
-      //       }
-
-            // (username: "<username-goes-here>") {
-            //       username
-            //       email
-            //       savedBooks
-            //       books {
-            //          bookText
-            //       }
-            // }
-      
-            //get all books
-            // books {
-            //       _id
-            //       username
-            //       bookText
-            //       genres {
-            //             _id
-            //             username
-            //             genreChoices
-            //       },
-            
-            // //get a single book
-            // book(_id: "<book-id-here">) {
-            //       _id
-            //       username
-            //       bookText
-            //       genres {
-            //             username
-            //             genreChoices
-            //       }
-            }
-
-         
-
-      
-
-
-      //get all users
-
-}
 
 module.exports = resolvers;
