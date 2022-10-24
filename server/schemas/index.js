@@ -1,5 +1,3 @@
-const router = router('express').Router();
-const userRoutes = require('./')
 const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
 
