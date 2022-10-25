@@ -19,7 +19,7 @@
 
 //       const createdUser = await User.collection.insertMany(userData);
 
-//       const saveBook = [];
+//       const savedBooks = [];
       
 //       for (let i = 0; i < 30; i += 1) {
 //             const authors = faker.internet.Authors();
@@ -29,7 +29,7 @@
 //             const link = faker.internet.Link();
 //             const title = faker.intenet.Title();
 
-//             saveBook ({ authors, description, bookId, image, link, title });
+//             savedBooks ({ authors, description, bookId, image, link, title });
 //       }
 
 //       const bookCount = await Book.collection.insertMany(bookData)

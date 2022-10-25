@@ -30,7 +30,7 @@ export const getMe = (token) => {
             }),
           };
 
-          export const saveBook = (bookData, token) => {
+          export const savedBooks = (bookData, token) => {
                return fetch('/api/users', {
                method: 'PUT',
                  headers: {

@@ -55,7 +55,7 @@ login: Accepts an email and password as parameters; returns an Auth type.
 
 addUser: Accepts a username, email, and password as parameters; returns an Auth type.
 
-saveBook: Accepts a book author's array, description, title, bookId, image, and link as parameters; returns a User type. (Look into creating what's known as an input type to handle all of these parameters!)
+savedBooks: Accepts a book author's array, description, title, bookId, image, and link as parameters; returns a User type. (Look into creating what's known as an input type to handle all of these parameters!)
 
 removeBook: Accepts a book's bookId as a parameter; returns a User type.
 
@@ -102,7 +102,7 @@ LOGIN_USER will execute the loginUser mutation set up using Apollo Server.
 
 ADD_USER will execute the addUser mutation.
 
-SAVE_BOOK will execute the saveBook mutation.
+SAVE_BOOK will execute the savedBooks mutation.
 
 REMOVE_BOOK will execute the removeBook mutation.
 
@@ -112,7 +112,7 @@ App.js: Create an Apollo Provider to make every request work with the Apollo ser
 
 SearchBooks.js:
 
-Use the Apollo useMutation() Hook to execute the SAVE_BOOK mutation in the handleSaveBook() function instead of the saveBook() function imported from the API file.
+Use the Apollo useMutation() Hook to execute the SAVE_BOOK mutation in the handlesavedBooks() function instead of the savedBooks() function imported from the API file.
 
 Make sure you keep the logic for saving the book's ID to state in the try...catch block!
 
